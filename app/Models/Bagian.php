@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Bagian extends Model
+{
+    use HasFactory;
+
+    protected $table = 'bagian';
+
+    protected $fillable = [
+        'nama_bagian',
+        'keterangan',
+    ];
+
+    // Relasi: Satu Bagian punya banyak Pengguna (User)
+    public function users()
+    {
+        return $this->hasMany(User::class, 'bagian_id');
+    }
+}

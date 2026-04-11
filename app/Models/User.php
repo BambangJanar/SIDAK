@@ -17,9 +17,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nama_lengkap',
         'email',
         'password',
+        'peran_id',
+        'bagian_id',
+        'nama_bagian_kustom',
+        'status',
+        'status_aktif',
     ];
 
     /**
@@ -43,5 +48,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Relasi ke Peran
+    public function peran()
+    {
+        return $this->belongsTo(Peran::class, 'peran_id');
+    }
+
+    // Relasi ke Bagian
+    public function bagian()
+    {
+        return $this->belongsTo(Bagian::class, 'bagian_id');
     }
 }
