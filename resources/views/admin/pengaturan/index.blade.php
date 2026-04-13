@@ -126,6 +126,22 @@
                         <p class="text-xs text-gray-500 mt-1">Biarkan kosong jika penandatangan tidak menggunakan NIP.
                         </p>
                     </div>
+
+                    <div class="pt-2 border-t border-gray-100 dark:border-gray-700">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Gambar Tanda
+                            Tangan / Stempel</label>
+                        @if (isset($pengaturan->ttd_image) && file_exists(public_path('images/' . $pengaturan->ttd_image)))
+                            <div class="mb-3 p-2 border border-gray-200 rounded-lg bg-gray-50 inline-block">
+                                <img src="{{ asset('images/' . $pengaturan->ttd_image) }}" alt="TTD"
+                                    class="h-12 object-contain">
+                            </div>
+                        @endif
+                        <input type="file" name="ttd_image" accept="image/png, image/jpeg, image/jpg"
+                            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 dark:file:bg-gray-700 dark:file:text-gray-300">
+                        <p class="text-xs text-orange-500 mt-1">Gunakan gambar background transparan (PNG) untuk hasil
+                            cetak PDF terbaik.</p>
+                    </div>
+
                 </div>
             </div>
 

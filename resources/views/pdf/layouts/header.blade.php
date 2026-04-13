@@ -11,14 +11,15 @@
                 <div style="font-size:24px; font-weight:bold; color:#1e3a8a;">BPD</div>
             @endif
         </td>
-        <td width="85%" style="text-align: center; vertical-align: middle;">
-            <h2 style="margin: 0; font-size: 20px; font-weight: bold;">
+
+        <td width="70%" style="text-align: center; vertical-align: middle;">
+            <h2 style="margin: 0; font-size: 20px; font-weight: bold; text-transform: uppercase;">
                 {{ $pengaturan->kop_divisi ?? 'DIVISI SEKRETARIS PERUSAHAAN' }}
             </h2>
-            <h1 style="margin: 0; font-size: 26px; font-weight: bold; color: #1e3a8a;">
+            <h1 style="margin: 0; font-size: 26px; font-weight: bold; color: #1e3a8a; text-transform: uppercase;">
                 {{ $pengaturan->kop_instansi ?? 'BANK KALSEL' }}
             </h1>
-            <p style="margin: 5px 0 0 0; font-size: 12px; font-family: sans-serif;">
+            <p style="margin: 5px 0 0 0; font-size: 11px; font-family: sans-serif; line-height: 1.3;">
                 {!! nl2br(
                     e(
                         $pengaturan->kop_alamat ??
@@ -28,5 +29,7 @@
                 {{ $pengaturan->kop_kontak ?? 'Telp: 05113350725 | Email: costumercare@bankkalsel.co.id' }}
             </p>
         </td>
+
+        <td width="15%"></td>
     </tr>
 </table>

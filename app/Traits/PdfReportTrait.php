@@ -4,25 +4,39 @@ namespace App\Traits;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Pengaturan;
+use App\Models\LogCetakLaporan;
+use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Carbon\Carbon;
 
 trait PdfReportTrait
 {
-    /**
-     * Reusable method untuk mencetak PDF
-     * * @param string $view Nama file blade (cth: 'pdf.laporan_surat')
-     * @param array $data Data yang akan dikirim ke view
-     * @param string $filename Nama file saat di-stream
-     * @param string $orientation Orientasi kertas ('portrait' atau 'landscape')
-     */
     public function streamPdf($view, $data, $filename, $orientation = 'landscape')
     {
-        // Otomatis inject data pengaturan untuk Tanda Tangan
         $data['pengaturan'] = Pengaturan::first();
 
-        // Generate PDF
-        $pdf = Pdf::loadView($view, $data)->setPaper('a4', $orientation);
+        // 1. Generate UUID untuk laporan ini
+        $uuid = (string) Str::uuid();
 
-        // Render preview inline di browser
+        // 2. Simpan jejak cetak ke Database
+        LogCetakLaporan::create([
+            'id' => $uuid,
+            'user_id' => auth()->id() ?? null,
+            'jenis_laporan' => $data['title'] ?? 'Laporan Sistem',
+            'periode' => $data['periode'] ?? '-',
+            'waktu_cetak' => Carbon::now()
+        ]);
+
+        // 3. Buat URL Validasi
+        $urlValidasi = route('validasi.laporan', $uuid);
+
+        // 4. Generate QR Code (Cast ke string sebelum encode Base64)
+        $qrCodeSvg = (string) QrCode::format('svg')->size(100)->margin(0)->generate($urlValidasi);
+        $data['qrCode'] = 'data:image/svg+xml;base64,' . base64_encode($qrCodeSvg);
+        $data['uuid'] = $uuid;
+
+        // 5. Generate & Stream PDF
+        $pdf = Pdf::loadView($view, $data)->setPaper('a4', $orientation);
         return $pdf->stream($filename . '.pdf', ['Attachment' => false]);
     }
 }

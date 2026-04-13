@@ -10,12 +10,21 @@ use App\Http\Controllers\Admin\JenisSuratController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\PengaturanController;
 use App\Http\Controllers\Admin\UserController;
+use App\Models\LogCetakLaporan;
 use Illuminate\Support\Facades\Route;
 
 // Redirect root ke login
 Route::get('/', function () {
     return redirect()->route('login');
 });
+
+Route::get('/validasi/laporan/{id}', function ($id) {
+    // Cari data log berdasarkan UUID
+    $log = LogCetakLaporan::with('user')->find($id);
+
+    // Tampilkan ke halaman view public
+    return view('validasi', compact('log', 'id'));
+})->name('validasi.laporan');
 
 // --- ADMINISTRATOR (Master Data & User) ---
 Route::middleware('can:admin')->group(function () {
