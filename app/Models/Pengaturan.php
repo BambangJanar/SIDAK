@@ -26,6 +26,11 @@ class Pengaturan extends Model
         'ttd_nip',
         'ttd_jabatan',
         'ttd_kota',
-        'ttd_image'
+        'ttd_image',
+        'kop_instansi',
+        'kop_divisi',
+        'kop_alamat',
+        'kop_kontak',
+        'logo_instansi',
     ];
 }

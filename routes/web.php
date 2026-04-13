@@ -5,7 +5,11 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SuratController;
 use App\Http\Controllers\Admin\DisposisiController;
 use App\Http\Controllers\Admin\ArsipController;
+use App\Http\Controllers\Admin\BagianController;
+use App\Http\Controllers\Admin\JenisSuratController;
 use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\PengaturanController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Redirect root ke login
@@ -13,9 +17,20 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+// --- ADMINISTRATOR (Master Data & User) ---
+Route::middleware('can:admin')->group(function () {
+    // Catatan: Jika belum ada middleware can:admin, sementara biarkan tanpa middleware atau pakai pengecekan role manual.
+    // Asumsi kita bungkus dengan Auth biasa dulu:
+});
+
+// MASTER DATA JENIS SURAT
+
 // Middleware Auth & Verified (Breeze)
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    Route::resource('jenis-surat', JenisSuratController::class)->except(['create', 'show', 'edit']);
+    Route::resource('users', UserController::class)->except(['create', 'show', 'edit']);
+    Route::resource('bagian', BagianController::class)->except(['create', 'show', 'edit']);
     // --- DASHBOARD ---
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -83,7 +98,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // 9. Laporan Log Aktivitas
         Route::get('/log-aktivitas', [LaporanController::class, 'logAktivitas'])->name('log-aktivitas');
         Route::get('/log-aktivitas/cetak', [LaporanController::class, 'cetakLogAktivitas'])->name('cetak.log-aktivitas');
+
+        // TAMBAHKAN INI: Route Pengaturan Sistem
     });
+    Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');
+    Route::post('/pengaturan', [PengaturanController::class, 'update'])->name('pengaturan.update');
 
     // --- ADMINISTRATOR (Placeholder) ---
     // Manajemen User & Pengaturan Sistem bisa ditambahkan di sini nanti

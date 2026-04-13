@@ -96,15 +96,46 @@
     <div class="px-6 my-4 text-xs font-bold tracking-wider text-gray-400 uppercase">Administrator</div>
     <ul>
         <li class="relative px-6 py-3">
-            <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800"
-                href="#">
+            @if (request()->routeIs('jenis-surat.*'))
+                <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                    aria-hidden="true"></span>
+            @endif
+            <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ request()->routeIs('jenis-surat.*') ? 'text-gray-800' : '' }}"
+                href="{{ route('jenis-surat.index') }}">
+                <i class="fa-solid fa-tags text-lg w-5 text-center"></i>
+                <span class="ml-4">Master Jenis Surat</span>
+            </a>
+        </li>
+
+        <li class="relative px-6 py-3">
+            @if (request()->routeIs('users.*'))
+                <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                    aria-hidden="true"></span>
+            @endif
+            <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ request()->routeIs('users.*') ? 'text-gray-800' : '' }}"
+                href="{{ route('users.index') }}">
                 <i class="fa-solid fa-users-gear text-lg w-5 text-center"></i>
                 <span class="ml-4">Manajemen User</span>
             </a>
         </li>
         <li class="relative px-6 py-3">
-            <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800"
-                href="#">
+            @if (request()->routeIs('bagian.*'))
+                <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                    aria-hidden="true"></span>
+            @endif
+            <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ request()->routeIs('bagian.*') ? 'text-gray-800' : '' }}"
+                href="{{ route('bagian.index') }}">
+                <i class="fa-solid fa-sitemap text-lg w-5 text-center"></i>
+                <span class="ml-4">Master Divisi/Bagian</span>
+            </a>
+        </li>
+        <li class="relative px-6 py-3">
+            @if (request()->routeIs('pengaturan.*'))
+                <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                    aria-hidden="true"></span>
+            @endif
+            <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ request()->routeIs('pengaturan.*') ? 'text-gray-800' : '' }}"
+                href="{{ route('pengaturan.index') }}">
                 <i class="fa-solid fa-sliders text-lg w-5 text-center"></i>
                 <span class="ml-4">Pengaturan Sistem</span>
             </a>
