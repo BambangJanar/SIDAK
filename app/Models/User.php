@@ -61,4 +61,19 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Bagian::class, 'bagian_id');
     }
+
+    public function disposisiMasuk()
+    {
+        // Berdasarkan form sebelumnya, sepertinya kamu menggunakan 'ke_user_id'
+        return $this->hasMany(\App\Models\Disposisi::class, 'ke_user_id', 'id');
+    }
+
+    /**
+     * Relasi untuk mendapatkan semua disposisi yang DIKIRIM oleh user ini (Tugas Keluar)
+     */
+    public function disposisiKeluar()
+    {
+        // Ganti 'dari_user_id' menjadi 'pengirim_id' jika nama kolom di databasemu berbeda
+        return $this->hasMany(\App\Models\Disposisi::class, 'dari_user_id', 'id');
+    }
 }

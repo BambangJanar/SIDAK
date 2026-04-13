@@ -351,10 +351,18 @@
     @if (Auth::user()->peran_id == 1 || Auth::user()->peran_id == 2)
         <script>
             function promptAlasanPenolakan() {
-                let alasan = prompt("Masukkan alasan penolakan surat ini:");
+                let alasan = prompt("Masukkan alasan penolakan surat ini (Wajib):");
+
+                // Jika user mengisi alasan dan klik OK
                 if (alasan != null && alasan.trim() !== "") {
-                    // Di sini Anda bisa men-submit form via fetch API atau mengubah input hidden dan submit form
-                    alert("Fitur update status tolak sedang dikembangkan. Alasan yang dimasukkan: " + alasan);
+                    // Masukkan nilai inputan prompt ke dalam form hidden
+                    document.getElementById('alasan_penolakan_input').value = alasan;
+                    // Submit form penolakan
+                    document.getElementById('form-tolak').submit();
+                }
+                // Jika user klik OK tapi membiarkannya kosong
+                else if (alasan != null && alasan.trim() === "") {
+                    alert("Gagal: Alasan penolakan wajib diisi untuk mengubah status menjadi Ditolak!");
                 }
             }
         </script>
